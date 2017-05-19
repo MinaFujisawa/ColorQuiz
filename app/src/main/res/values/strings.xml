@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">CountryQuiz</string>
+    <!--<string name="question_text">Is Donald Trump the president of USA?</string>-->
+    <string name="true_button">True</string>
+    <string name="false_button">False</string>
+    <string name="next_button">Next</string>
+    <string name="prev_button">Prev</string>
+    <string name="correct_toast">Correct!</string>
+    <string name="incorrect_toast">Incorrect!</string>
+    <string name="q_USA">NY is the capital of USA</string>
+    <string name="q_japan">Tokyo is the capital of Japan</string>
+    <string name="q_Canada">Vancouver is the capital of Canada</string>
+    <string name="q_France">Paris is the capital of France</string>
+
+</resources>
