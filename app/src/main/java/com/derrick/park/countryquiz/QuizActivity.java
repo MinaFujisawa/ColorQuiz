@@ -22,8 +22,9 @@ public class QuizActivity extends AppCompatActivity {
     private Button mBtnBlue;
     private TextView mQustionColor;
     private TextView mCountDownText;
+    private TextView mIndexText;
     private int questionIndex = 0;
-    private int point = 0;
+    private int point = 1;
 
     private Question[] questionList = {
             new Question(R.string.c_blue),
@@ -38,9 +39,13 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
+        mIndexText = (TextView) findViewById(R.id.index);
+        mIndexText.setText(String.valueOf(questionIndex));
+
+
         //first question
         mQustionColor = (TextView) findViewById(R.id.question_color);
-        mQustionColor.setText(questionList[randomNum()].getQuestionColor());
+        showQuestion();
 
 
         mBtnRed = (Button) findViewById(R.id.btn_red);
@@ -48,6 +53,8 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check("Red");
+                showQuestion();
+                countIndex();
             }
         });
 
@@ -56,30 +63,62 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check("Green");
+                questionIndex++;
+                showQuestion();
+                countIndex();
             }
 
         });
 
-//        mNextButton = (ImageButton) findViewById(R.id.next_button);
-//        mNextButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                questionIndex++;
-//                questionIndex = questionIndex % (questionList.length);
-//                mQustionColor = (TextView) findViewById(R.id.question_text);
-//                mQustionColor.setText(questionList[questionIndex].getQuestionText());
-//            }
-//        });
-//
+        mBtnBlue = (Button) findViewById(R.id.btn_blue);
+        mBtnBlue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check("Blue");
+                questionIndex++;
+                showQuestion();
+                countIndex();
+            }
+
+        });
+
+        mBtnYellow = (Button) findViewById(R.id.btn_yellow);
+        mBtnYellow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check("Yellow");
+                questionIndex++;
+                showQuestion();
+                countIndex();
+            }
+
+        });
+
     }
 
     private void check(String userAnswer) {
-        if (String.valueOf(questionList[randomNum()].getQuestionColor()).   equals(userAnswer)) {
+        if ((mQustionColor.getText().toString()).equals(userAnswer)) {
             Toast.makeText(QuizActivity.this, R.string.correct_toast, Toast.LENGTH_SHORT).show();
             point++;
         } else {
             Toast.makeText(QuizActivity.this, R.string.incorrect_toast, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void showQuestion(){
+        mQustionColor.setText(questionList[randomNum()].getQuestionColor());
+        int colorList[]  =  {
+                getResources().getColor(R.color.colorRed),
+                getResources().getColor(R.color.colorBlue),
+                getResources().getColor(R.color.colorYellow),
+                getResources().getColor(R.color.colorGreen)
+        };
+        mQustionColor.setTextColor(colorList[randomNum()]);
+    }
+
+    private void countIndex(){
+        questionIndex++;
+        mIndexText.setText(String.valueOf(questionIndex));
     }
 
     private int randomNum(){

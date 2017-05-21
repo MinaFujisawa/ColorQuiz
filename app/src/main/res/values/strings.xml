@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">CountryQuiz</string>
-    <!--<string name="question_text">Is Donald Trump the president of USA?</string>-->
+    <string name="app_name">Color Quiz</string>
+    <string name="start">START!</string>
+    <string name="result">Your Score</string>
     <string name="c_red">Red</string>
     <string name="c_blue">Blue</string>
     <string name="c_yellow">Yellow</string>
