@@ -1,5 +1,9 @@
 package com.derrick.park.countryquiz;
 
+import android.app.Activity;
+
+import android.content.res.Resources;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -21,11 +25,11 @@ public class QuizActivity extends AppCompatActivity {
     private int questionIndex = 0;
     private int point = 0;
 
-
     private Question[] questionList = {
-            new Question(getString(R.string.c_blue)),
-            new Question("Red"),
-            new Question("Red")
+            new Question(R.string.c_blue),
+            new Question(R.string.c_yellow),
+            new Question(R.string.c_red),
+            new Question(R.string.c_green)
     };
 
 
@@ -70,7 +74,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void check(String userAnswer) {
-        if (questionList[randomNum()].getQuestionColor().equals(userAnswer)) {
+        if (String.valueOf(questionList[randomNum()].getQuestionColor()).   equals(userAnswer)) {
             Toast.makeText(QuizActivity.this, R.string.correct_toast, Toast.LENGTH_SHORT).show();
             point++;
         } else {

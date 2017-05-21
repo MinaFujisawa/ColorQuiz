@@ -5,17 +5,17 @@ package com.derrick.park.countryquiz;
  */
 
 public class Question {
-    private String questionColor;
+    private int questionColor;
 
-    public Question(String questionColor) {
+    public Question(int questionColor) {
         this.questionColor = questionColor;
     }
 
-    public String getQuestionColor() {
+    public int getQuestionColor() {
         return questionColor;
     }
 
-    public void setQuestionColor(String questionColor) {
+    public void setQuestionColor(int questionColor) {
         this.questionColor = questionColor;
     }
 
