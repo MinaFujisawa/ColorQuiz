@@ -9,4 +9,5 @@
     <color name="colorGreen">#00ff00</color>
     <color name="colorPink">#FF4081</color>
     <color name="colorBlack">#000</color>
+    <color name="colorWhite">#fff</color>
 </resources>

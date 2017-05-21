@@ -5,18 +5,18 @@ package com.derrick.park.countryquiz;
  */
 
 public class Question {
-    private int questionColor;
+    private int question;
 
     public Question(int questionColor) {
-        this.questionColor = questionColor;
+        this.question = questionColor;
     }
 
-    public int getQuestionColor() {
-        return questionColor;
+    public int getQuestion() {
+        return question;
     }
 
-    public void setQuestionColor(int questionColor) {
-        this.questionColor = questionColor;
+    public void setQuestion(int questionColor) {
+        this.question = questionColor;
     }
 
 }
