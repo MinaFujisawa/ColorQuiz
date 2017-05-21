@@ -7,60 +7,46 @@
 
 
     <TextView
-        android:id="@+id/question_text"
+        android:id="@+id/countDown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="24dp"
-        />
+        android:text="30"
+        android:textAlignment="center"
+        android:textSize="24dp" />
 
-    <LinearLayout
-        android:layout_width="200dp"
+    <TextView
+        android:id="@+id/question_color"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:padding="24dp"
+        android:text="Question color"
+        android:textAlignment="center"
+        android:textSize="32dp" />
 
-        <Button
-            android:id="@+id/true_button"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="@string/true_button" />
-
-        <Button
-            android:id="@+id/false_button"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="@string/false_button" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="200dp"
+    <Button
+        android:id="@+id/btn_red"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:text="@string/c_red" />
 
-        <ImageButton
-            android:id="@+id/prev_button"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:background="@null"
-            android:scaleType="fitCenter"
+    <Button
+        android:id="@+id/btn_blue"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="@string/c_blue" />
 
-            android:layout_gravity="left"
-            android:src="@drawable/prev" />
+    <Button
+        android:id="@+id/btn_yellow"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="@string/c_yellow" />
 
-        <ImageButton
-            android:id="@+id/next_button"
-            android:src="@drawable/next"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:background="@null"
-            android:scaleType="fitCenter" />
-
-    </LinearLayout>
-
+    <Button
+        android:id="@+id/btn_green"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="@string/c_green" />
 
 
 </LinearLayout>

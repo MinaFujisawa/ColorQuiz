@@ -2,28 +2,30 @@ package com.derrick.park.countryquiz;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import java.util.Random;
 
 public class QuizActivity extends AppCompatActivity {
-    private Button mTureButton;
-    private Button mFalseButton;
-    private ImageButton mNextButton;
-    private ImageButton mPrevButton;
-    private TextView mQustionText;
+    Random random = new Random();
+    private Button mBtnRed;
+    private Button mBtnGreen;
+    private Button mBtnYellow;
+    private Button mBtnBlue;
+    private TextView mQustionColor;
+    private TextView mCountDownText;
     private int questionIndex = 0;
+    private int point = 0;
+
 
     private Question[] questionList = {
-            new Question(R.string.q_Canada, false),
-            new Question(R.string.q_France, true),
-            new Question(R.string.q_japan, true),
-            new Question(R.string.q_USA, false),
+            new Question(getString(R.string.c_blue)),
+            new Question("Red"),
+            new Question("Red")
     };
 
 
@@ -33,61 +35,51 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz);
 
         //first question
-        mQustionText = (TextView) findViewById(R.id.question_text);
-        mQustionText.setText(questionList[0].getQuestionText());
+        mQustionColor = (TextView) findViewById(R.id.question_color);
+        mQustionColor.setText(questionList[randomNum()].getQuestionColor());
 
 
-        mTureButton = (Button) findViewById(R.id.true_button);
-        mTureButton.setOnClickListener(new View.OnClickListener() {
+        mBtnRed = (Button) findViewById(R.id.btn_red);
+        mBtnRed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // anything you want when the button is pressed
-                result(true);
+                check("Red");
             }
         });
 
-        mFalseButton = (Button) findViewById(R.id.false_button);
-        mFalseButton.setOnClickListener(new View.OnClickListener() {
+        mBtnGreen = (Button) findViewById(R.id.btn_green);
+        mBtnGreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                result(false);
+                check("Green");
             }
 
         });
 
-        mNextButton = (ImageButton) findViewById(R.id.next_button);
-        mNextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                questionIndex++;
-                questionIndex = questionIndex % (questionList.length);
-                mQustionText = (TextView) findViewById(R.id.question_text);
-                mQustionText.setText(questionList[questionIndex].getQuestionText());
-            }
-        });
-
-        mPrevButton = (ImageButton) findViewById(R.id.prev_button);
-        mPrevButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(questionIndex == 0 ){
-                    questionIndex = questionList.length-1;
-                } else {
-                    questionIndex--;
-                }
-
-                mQustionText = (TextView) findViewById(R.id.question_text);
-                mQustionText.setText(questionList[questionIndex].getQuestionText());
-            }
-        });
+//        mNextButton = (ImageButton) findViewById(R.id.next_button);
+//        mNextButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                questionIndex++;
+//                questionIndex = questionIndex % (questionList.length);
+//                mQustionColor = (TextView) findViewById(R.id.question_text);
+//                mQustionColor.setText(questionList[questionIndex].getQuestionText());
+//            }
+//        });
+//
     }
 
-    private void result(boolean userAnswer) {
-        if (questionList[questionIndex].getAnswer() == userAnswer) {
+    private void check(String userAnswer) {
+        if (questionList[randomNum()].getQuestionColor().equals(userAnswer)) {
             Toast.makeText(QuizActivity.this, R.string.correct_toast, Toast.LENGTH_SHORT).show();
+            point++;
         } else {
             Toast.makeText(QuizActivity.this, R.string.incorrect_toast, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private int randomNum(){
+        return random.nextInt(questionList.length);
     }
 
 }
