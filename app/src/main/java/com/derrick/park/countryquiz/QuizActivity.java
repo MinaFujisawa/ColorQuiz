@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import android.content.res.Resources;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -18,18 +19,9 @@ import java.util.Random;
 public class QuizActivity extends AppCompatActivity {
     Random random = new Random();
     final int BTNNUM = 4;
-    private Button mBtnRed;
-    private Button mBtnGreen;
-    private Button mBtnYellow;
-    private Button mBtnBlue;
-    private Button mBtn1;
-    private Button mBtn2;
-    private Button mBtn3;
-    private Button mBtn4;
-//    private Button[] btnList = new Button[BTNNUM];
     private ArrayList<Button> btnList = new ArrayList<>();
+    private ArrayList<Integer> colorList = new ArrayList<>();
     private TextView mQustionColor;
-
     private TextView mCountDownText;
     private TextView mIndexText;
     private int questionIndex = 0;
@@ -44,7 +36,6 @@ public class QuizActivity extends AppCompatActivity {
             new Question(R.string.c_green)
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +45,14 @@ public class QuizActivity extends AppCompatActivity {
         btnList.add((Button) findViewById(R.id.btn2));
         btnList.add((Button) findViewById(R.id.btn3));
         btnList.add((Button) findViewById(R.id.btn4));
+
+        colorList.add(getResources().getColor(R.color.colorRed));
+        colorList.add(getResources().getColor(R.color.colorBlack));
+        colorList.add(getResources().getColor(R.color.colorBlue));
+        colorList.add(getResources().getColor(R.color.colorGreen));
+        colorList.add(getResources().getColor(R.color.colorYellow));
+        colorList.add(getResources().getColor(R.color.colorPink));
+
 
         mIndexText = (TextView) findViewById(R.id.index);
         mIndexText.setText(String.valueOf(questionIndex));
@@ -91,15 +90,7 @@ public class QuizActivity extends AppCompatActivity {
         int QIndex = randomNum();
         mQustionColor.setText(questionList[QIndex].getQuestionColor());
         setAnswerBtn(QIndex);
-        int colorList[] = {
-                getResources().getColor(R.color.colorRed),
-                getResources().getColor(R.color.colorBlue),
-                getResources().getColor(R.color.colorYellow),
-                getResources().getColor(R.color.colorPink),
-                getResources().getColor(R.color.colorBlack),
-                getResources().getColor(R.color.colorGreen)
-        };
-        mQustionColor.setTextColor(colorList[randomNum()]);
+        mQustionColor.setTextColor(colorList.get(randomNum()));
     }
 
     private void setAnswerBtn(int currentQIndex) {
@@ -107,12 +98,13 @@ public class QuizActivity extends AppCompatActivity {
         boolean num[] = new boolean[questionList.length];
 
         // set other option btns
-        for (int i = 0; i < BTNNUM; ) {
+        int i = 0;
+        while (i < BTNNUM) {
             int p = random.nextInt(BTNNUM);
-            if (num[p] == false && p != currentQIndex) { //まだ使ってない値か判定
+            if (num[p] == false && p != currentQIndex) {
                 btnList.get(i).setText(questionList[p].getQuestionColor());
-                num[p] = true; //使った値はtrueにしておく
-                i++; //ループ用の値をインクリメント
+                num[p] = true;
+                i++;
             }
         }
 
