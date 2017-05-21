@@ -6,6 +6,8 @@
     <string name="c_blue">Blue</string>
     <string name="c_yellow">Yellow</string>
     <string name="c_green">Green</string>
+    <string name="c_black">Black</string>
+    <string name="c_pink">Pink</string>
     <string name="correct_toast">Correct!</string>
     <string name="incorrect_toast">Incorrect!</string>
 
