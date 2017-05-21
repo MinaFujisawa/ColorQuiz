@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class QuizActivity extends AppCompatActivity {
@@ -25,8 +26,10 @@ public class QuizActivity extends AppCompatActivity {
     private Button mBtn2;
     private Button mBtn3;
     private Button mBtn4;
-    private Button[] btnList = new Button[BTNNUM];
+//    private Button[] btnList = new Button[BTNNUM];
+    private ArrayList<Button> btnList = new ArrayList<>();
     private TextView mQustionColor;
+
     private TextView mCountDownText;
     private TextView mIndexText;
     private int questionIndex = 0;
@@ -47,16 +50,10 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        mBtn1 = (Button) findViewById(R.id.btn1);
-        mBtn2 = (Button) findViewById(R.id.btn2);
-        mBtn3 = (Button) findViewById(R.id.btn3);
-        mBtn4 = (Button) findViewById(R.id.btn4);
-
-        btnList[0] = mBtn1;
-        btnList[1] = mBtn2;
-        btnList[2] = mBtn3;
-        btnList[3] = mBtn4;
-
+        btnList.add((Button) findViewById(R.id.btn1));
+        btnList.add((Button) findViewById(R.id.btn2));
+        btnList.add((Button) findViewById(R.id.btn3));
+        btnList.add((Button) findViewById(R.id.btn4));
 
         mIndexText = (TextView) findViewById(R.id.index);
         mIndexText.setText(String.valueOf(questionIndex));
@@ -64,8 +61,7 @@ public class QuizActivity extends AppCompatActivity {
 
         //first question
         mQustionColor = (TextView) findViewById(R.id.question_color);
-        showQuestion();
-        setAnswerBtn();
+        setQandA();
 
 
 //        mBtnRed = (Button) findViewById(R.id.btn_red);
@@ -81,30 +77,6 @@ public class QuizActivity extends AppCompatActivity {
 
     }
 
-    private void setAnswerBtn() {
-
-        int ranNum = random.nextInt(BTNNUM);
-        boolean num[] = new boolean[questionList.length];
-
-        // set collect answer btn
-        btnList[ranNum].setText(mQustionColor.getText().toString());
-        // search index of the current question
-        for (int i = 0; i < questionList.length; i++) {
-            if(questionList[i])
-        }
-
-        // set other option btns
-        for (int i = 0; i < BTNNUM; ) {
-            int p = random.nextInt(BTNNUM - 1);
-            if (num[p] == false) { //まだ使ってない値か判定
-                if (p != currentQIndex) {
-                    btnList[i].setText(questionList[p].getQuestionColor());
-                    num[p] = true; //使った値はtrueにしておく
-                }
-                i++; //ループ用の値をインクリメント
-            }
-        }
-    }
 
     private void check(String userAnswer) {
         if ((mQustionColor.getText().toString()).equals(userAnswer)) {
@@ -115,8 +87,10 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
-    private void showQuestion() {
-        mQustionColor.setText(questionList[randomNum()].getQuestionColor());
+    private void setQandA() {
+        int QIndex = randomNum();
+        mQustionColor.setText(questionList[QIndex].getQuestionColor());
+        setAnswerBtn(QIndex);
         int colorList[] = {
                 getResources().getColor(R.color.colorRed),
                 getResources().getColor(R.color.colorBlue),
@@ -126,6 +100,25 @@ public class QuizActivity extends AppCompatActivity {
                 getResources().getColor(R.color.colorGreen)
         };
         mQustionColor.setTextColor(colorList[randomNum()]);
+    }
+
+    private void setAnswerBtn(int currentQIndex) {
+        int ranNum = random.nextInt(BTNNUM);
+        boolean num[] = new boolean[questionList.length];
+
+        // set other option btns
+        for (int i = 0; i < BTNNUM; ) {
+            int p = random.nextInt(BTNNUM);
+            if (num[p] == false && p != currentQIndex) { //まだ使ってない値か判定
+                btnList.get(i).setText(questionList[p].getQuestionColor());
+                num[p] = true; //使った値はtrueにしておく
+                i++; //ループ用の値をインクリメント
+            }
+        }
+
+        // set collect answer btn
+        btnList.get(ranNum).setText(mQustionColor.getText().toString());
+
     }
 
     private void countIndex() {
