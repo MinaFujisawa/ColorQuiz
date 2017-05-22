@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class QuizActivity extends AppCompatActivity {
+public class QuizActivity extends AppCompatActivity implements View.OnClickListener {
     Random random = new Random();
     final int BTNNUM = 4;
     private ArrayList<Button> btnList = new ArrayList<>();
@@ -40,6 +40,13 @@ public class QuizActivity extends AppCompatActivity {
             new Question(R.string.c_green)
     };
 
+    @Override
+    public void onClick(View v) {
+        setQuestion();
+        setAnswerBtn(QIndex);
+        setColorToBtn();
+        countIndex();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,17 +76,10 @@ public class QuizActivity extends AppCompatActivity {
         setQuestion();
         setAnswerBtn(QIndex);
 
-
-//        mBtnRed = (Button) findViewById(R.id.btn_red);
-//        mBtnRed.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                check("Red");
-//                showQuestion();
-//                countIndex();
-//            }
-//        });
-
+        // add click listeners
+        for (int i = 0; i < BTNNUM; i++) {
+            btnList.get(i).setOnClickListener(this);
+        }
 
     }
 
