@@ -44,7 +44,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         setQuestion();
         setAnswerBtn(QIndex);
-        setColorToBtn();
         countIndex();
     }
 
@@ -58,7 +57,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         btnList.add((Button) findViewById(R.id.btn3));
         btnList.add((Button) findViewById(R.id.btn4));
 
-        colorList.add(new Colors(getResources().getColor(R.color.colorRed), false));
+        colorList.add(new Colors(getResources().getColor(R.color.colorRed), true));
         colorList.add(new Colors(getResources().getColor(R.color.colorBlack), true));
         colorList.add(new Colors(getResources().getColor(R.color.colorYellow), false));
         colorList.add(new Colors(getResources().getColor(R.color.colorBlue), true));
@@ -72,7 +71,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
         //first question
         mQustionColor = (TextView) findViewById(R.id.question_color);
-        setColorToBtn();
         setQuestion();
         setAnswerBtn(QIndex);
 
@@ -120,6 +118,8 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         }
         // set collect answer btn
         btnList.get(random.nextInt(BTNNUM)).setText(mQustionColor.getText().toString());
+
+        setColorToBtn();
     }
 
 
@@ -129,6 +129,8 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
             btnList.get(i).setBackgroundColor(colorList.get(randNum).getColorName());
             if (colorList.get(randNum).isDeepColor()) {
                 btnList.get(i).setTextColor(getResources().getColor(R.color.colorWhite));
+            } else {
+                btnList.get(i).setTextColor(getResources().getColor(R.color.colorBlack));
             }
         }
     }
