@@ -42,6 +42,10 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        Button b = (Button)v;
+        String buttonText = b.getText().toString();
+        check(buttonText);
+
         setQuestion();
         setAnswerBtn(QIndex);
         countIndex();
