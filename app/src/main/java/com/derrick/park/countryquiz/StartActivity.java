@@ -6,12 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class Start extends AppCompatActivity {
+public class StartActivity extends AppCompatActivity {
     private Button mBtnStart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        final CountDownTimer timer = new CountDownTimer();
 
         mBtnStart = (Button) findViewById(R.id.btn_start);
         mBtnStart.setOnClickListener(new View.OnClickListener() {
@@ -19,6 +20,8 @@ public class Start extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplication(), QuizActivity.class);
                 startActivity(intent);
+                timer.setCountDown(30000);
+                timer.reset();
             }
         });
     }

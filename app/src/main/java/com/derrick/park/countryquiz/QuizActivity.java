@@ -28,7 +28,9 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mIndexText;
     private int questionIndex = 0;
     private int point = 1;
+    private int leftSec;
     int QIndex;
+    CountDownTimer timer = new CountDownTimer();
 
 
     private Question[] questionList = {
@@ -68,9 +70,13 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         colorList.add(new Colors(getResources().getColor(R.color.colorGreen), false));
         colorList.add(new Colors(getResources().getColor(R.color.colorPink), false));
 
-
+        //Show Index number
         mIndexText = (TextView) findViewById(R.id.index);
         mIndexText.setText(String.valueOf(questionIndex));
+
+        //show left sec
+        mCountDownText = (TextView) findViewById(R.id.countDown);
+        mCountDownText.setText(Integer.toString(timer.getSecondsLeft()));
 
 
         //first question
@@ -147,5 +153,4 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     private int randomNum() {
         return random.nextInt(questionList.length);
     }
-
 }
