@@ -15,6 +15,7 @@ import java.util.Random;
 
 public class QuizActivity extends AppCompatActivity implements View.OnClickListener {
     Random random = new Random();
+    Score score = new Score();
     final int BTNNUM = 4;
     private ArrayList<Button> btnList = new ArrayList<>();
     private List<Colors> colorList = new ArrayList<>();
@@ -22,8 +23,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mCountDownText;
     private TextView mIndexText;
     private int questionIndex = 0;
-    private int point = 1;
-    private int leftSec;
     int QIndex;
 
 
@@ -100,7 +99,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     private void check(String userAnswer) {
         if ((mQustionColor.getText().toString()).equals(userAnswer)) {
             Toast.makeText(QuizActivity.this, R.string.correct_toast, Toast.LENGTH_SHORT).show();
-            point++;
+            score.addScore();
         } else {
             Toast.makeText(QuizActivity.this, R.string.incorrect_toast, Toast.LENGTH_SHORT).show();
         }
