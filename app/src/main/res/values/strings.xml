@@ -10,5 +10,7 @@
     <string name="c_pink">Pink</string>
     <string name="correct_toast">Correct!</string>
     <string name="incorrect_toast">Incorrect!</string>
+    <string name="result_heading">Your score</string>
+    <string name="restart">RETRY!</string>
 
 </resources>

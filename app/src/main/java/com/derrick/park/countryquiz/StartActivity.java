@@ -12,7 +12,7 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        final CountDownTimer timer = new CountDownTimer();
+        final mCountDownTimer timer = new mCountDownTimer();
 
         mBtnStart = (Button) findViewById(R.id.btn_start);
         mBtnStart.setOnClickListener(new View.OnClickListener() {
@@ -20,8 +20,7 @@ public class StartActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplication(), QuizActivity.class);
                 startActivity(intent);
-                timer.setCountDown(30000);
-                timer.reset();
+
             }
         });
     }

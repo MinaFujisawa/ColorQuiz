@@ -1,16 +1,11 @@
 package com.derrick.park.countryquiz;
 
-import android.app.Activity;
-
-import android.content.res.Resources;
-import android.content.Context;
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +25,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     private int point = 1;
     private int leftSec;
     int QIndex;
-    CountDownTimer timer = new CountDownTimer();
 
 
     private Question[] questionList = {
@@ -44,7 +38,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Button b = (Button)v;
+        Button b = (Button) v;
         String buttonText = b.getText().toString();
         check(buttonText);
 
@@ -74,9 +68,20 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         mIndexText = (TextView) findViewById(R.id.index);
         mIndexText.setText(String.valueOf(questionIndex));
 
-        //show left sec
+        //CountDownTimer
         mCountDownText = (TextView) findViewById(R.id.countDown);
-        mCountDownText.setText(Integer.toString(timer.getSecondsLeft()));
+        new CountDownTimer(10000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                mCountDownText.setText(String.valueOf(millisUntilFinished / 1000));
+            }
+
+            public void onFinish() {
+                Intent intent = new Intent(getApplication(), ResultActivity.class);
+                startActivity(intent);
+            }
+
+        }.start();
 
 
         //first question
