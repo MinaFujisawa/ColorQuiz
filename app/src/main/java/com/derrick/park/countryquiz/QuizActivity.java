@@ -60,7 +60,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
         //CountDownTimer
         mCountDownText = (TextView) findViewById(R.id.countDown);
-        new CountDownTimer(10000, 1000) {
+        new CountDownTimer(31000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 mCountDownText.setText(String.valueOf(millisUntilFinished / 1000));
@@ -80,7 +80,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         setquiz();
         setAnswerBtn(QIndex);
 
-        // add click listeners
+        // add click listeners for all buttons
         for (int i = 0; i < BTNNUM; i++) {
             btnList.get(i).setOnClickListener(this);
         }
@@ -124,13 +124,19 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void setColorToBtn() {
-        for (int i = 0; i < BTNNUM; i++) {
-            int randNum = randomNum();
-            btnList.get(i).setBackgroundColor(colorList.get(randNum).getColorName());
-            if (colorList.get(randNum).isDeepColor()) {
-                btnList.get(i).setTextColor(getResources().getColor(R.color.colorWhite));
-            } else {
-                btnList.get(i).setTextColor(getResources().getColor(R.color.colorBlack));
+        boolean num[] = new boolean[BTNNUM];
+        int i = 0;
+        while (i < BTNNUM) {
+            int p = random.nextInt(BTNNUM);
+            if (num[p] == false) {
+                btnList.get(i).setBackgroundColor(colorList.get(p).getColorName());
+                if (colorList.get(p).isDeepColor()) {
+                    btnList.get(i).setTextColor(getResources().getColor(R.color.colorWhite));
+                } else {
+                    btnList.get(i).setTextColor(getResources().getColor(R.color.colorBlack));
+                }
+                num[p] = true;
+                i++;
             }
         }
     }
