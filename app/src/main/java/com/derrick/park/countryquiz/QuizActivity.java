@@ -14,26 +14,17 @@ import java.util.List;
 import java.util.Random;
 
 public class QuizActivity extends AppCompatActivity implements View.OnClickListener {
-    Random random = new Random();
-    Score score = new Score();
+    private Random random = new Random();
+    private QuizList quizList = new QuizList();
     final int BTNNUM = 4;
     private ArrayList<Button> btnList = new ArrayList<>();
     private List<Colors> colorList = new ArrayList<>();
     private TextView mQustionColor;
     private TextView mCountDownText;
     private TextView mIndexText;
-    private int questionIndex = 0;
+    private int quizIndex = 0;
+    private int mScore;
     int QIndex;
-
-
-    private Question[] questionList = {
-            new Question(R.string.c_blue),
-            new Question(R.string.c_yellow),
-            new Question(R.string.c_black),
-            new Question(R.string.c_pink),
-            new Question(R.string.c_red),
-            new Question(R.string.c_green)
-    };
 
     @Override
     public void onClick(View v) {
@@ -41,7 +32,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         String buttonText = b.getText().toString();
         check(buttonText);
 
-        setQuestion();
+        setquiz();
         setAnswerBtn(QIndex);
         countIndex();
     }
@@ -65,7 +56,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
         //Show Index number
         mIndexText = (TextView) findViewById(R.id.index);
-        mIndexText.setText(String.valueOf(questionIndex));
+        mIndexText.setText(String.valueOf(quizIndex));
 
         //CountDownTimer
         mCountDownText = (TextView) findViewById(R.id.countDown);
@@ -77,15 +68,16 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
             public void onFinish() {
                 Intent intent = new Intent(getApplication(), ResultActivity.class);
+                intent.putExtra("score", mScore);
                 startActivity(intent);
             }
 
         }.start();
 
 
-        //first question
-        mQustionColor = (TextView) findViewById(R.id.question_color);
-        setQuestion();
+        //first quiz
+        mQustionColor = (TextView) findViewById(R.id.quiz_color);
+        setquiz();
         setAnswerBtn(QIndex);
 
         // add click listeners
@@ -99,33 +91,27 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     private void check(String userAnswer) {
         if ((mQustionColor.getText().toString()).equals(userAnswer)) {
             Toast.makeText(QuizActivity.this, R.string.correct_toast, Toast.LENGTH_SHORT).show();
-            score.addScore();
+            mScore++;
         } else {
             Toast.makeText(QuizActivity.this, R.string.incorrect_toast, Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void setQuestion() {
+    private void setquiz() {
         QIndex = randomNum();
-        mQustionColor.setText(questionList[QIndex].getQuestion());
-
+        mQustionColor.setText(quizList.getQuizList()[QIndex].getQuiz());
         mQustionColor.setTextColor(colorList.get(randomNum()).getColorName());
-
-//        Log.d("MyApp","get color name :" + colorList.get(0).getColorName());
-//        Log.d("MyApp","getResources :" + getResources().getColor(R.color.colorRed));
-
-
     }
 
     private void setAnswerBtn(int currentQIndex) {
-        boolean num[] = new boolean[questionList.length];
+        boolean num[] = new boolean[quizList.getQuestionNum()];
 
         // set other option btns
         int i = 0;
         while (i < BTNNUM) {
-            int p = random.nextInt(questionList.length);
+            int p = random.nextInt(quizList.getQuestionNum());
             if (num[p] == false && p != currentQIndex) {
-                btnList.get(i).setText(questionList[p].getQuestion());
+                btnList.get(i).setText(quizList.getQuizList()[p].getQuiz());
                 num[p] = true;
                 i++;
             }
@@ -150,11 +136,11 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void countIndex() {
-        questionIndex++;
-        mIndexText.setText(String.valueOf(questionIndex));
+        quizIndex++;
+        mIndexText.setText(String.valueOf(quizIndex));
     }
 
     private int randomNum() {
-        return random.nextInt(questionList.length);
+        return random.nextInt(quizList.getQuestionNum());
     }
 }
