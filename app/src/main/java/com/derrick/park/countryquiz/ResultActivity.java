@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class ResultActivity extends AppCompatActivity {
-    private QuizList quizList = new QuizList();
     private Button mRetryBtn;
     private TextView mScoreTextView;
     private TextView mQuestionNumTextView;

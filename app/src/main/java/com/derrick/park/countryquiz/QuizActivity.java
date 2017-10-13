@@ -15,26 +15,23 @@ import java.util.Random;
 
 public class QuizActivity extends AppCompatActivity implements View.OnClickListener {
     private Random random = new Random();
-    private QuizList quizList = new QuizList();
     final int BTNNUM = 4;
     private ArrayList<Button> btnList = new ArrayList<>();
     private List<Color> colorList = new ArrayList<>();
-    private TextView mQustionColorTextView;
+    private TextView mQuestionColorTextView;
     private TextView mCountDownTextView;
-    private int quizIndex = 0;
     private int mScore;
     private String answerColor;
     int QIndex;
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View v)     {
         Button b = (Button) v;
         String buttonText = b.getText().toString();
         check(buttonText);
 
-                setQuiz();
+        setQuiz();
         setAnswerBtn(QIndex);
-        quizIndex++;
     }
 
     @Override
@@ -51,7 +48,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         colorList.add(new Color(getResources().getColor(R.color.colorBlack), getString(R.string.c_black), false));
         colorList.add(new Color(getResources().getColor(R.color.colorBlue), getString(R.string.c_blue), false));
         colorList.add(new Color(getResources().getColor(R.color.colorGreen), getString(R.string.c_green), true));
-        colorList.add(new Color(getResources().getColor(R.color.colorPink), getString(R.string.c_pink), true));
+        colorList.add(new Color(getResources().getColor(R.color.colorYellow), getString(R.string.c_yellow), true));
 
         //CountDownTimer
         mCountDownTextView = (TextView) findViewById(R.id.countDown);
@@ -71,7 +68,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
 
         //first quiz
-        mQustionColorTextView = (TextView) findViewById(R.id.quiz_color);
+        mQuestionColorTextView = (TextView) findViewById(R.id.quiz_color);
         setQuiz();
         setAnswerBtn(QIndex);
 
@@ -95,27 +92,28 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     private void setQuiz() {
         QIndex = getRandomNum();
         //set text
-        mQustionColorTextView.setText(quizList.getQuizList()[QIndex].getColorNameStringId());
+        mQuestionColorTextView.setText(colorList.get(QIndex).getColorName());
         //set text color
         Color color = colorList.get(getRandomNum());
         answerColor = color.getColorName();
-        mQustionColorTextView.setTextColor(color.getColorId());
+        mQuestionColorTextView.setTextColor(color.getColorId());
     }
 
     private void setAnswerBtn(int currentQIndex) {
-        boolean num[] = new boolean[quizList.getQuestionLength()];
+        boolean num[] = new boolean[colorList.size()];
 
         // set other option btns
         int i = 0;
         while (i < BTNNUM) {
             int randomNum = getRandomNum();
             if (num[randomNum] == false && randomNum != currentQIndex) {
-                btnList.get(i).setText(quizList.getQuizList()[randomNum].getColorNameStringId());
+                btnList.get(i).setText(colorList.get(QIndex).getColorName());
                 num[randomNum] = true;
                 i++;
             }
         }
         // set collect answer btn
+        // TODO:被り防止？
         btnList.get(random.nextInt(BTNNUM)).setText(answerColor);
 
         setColorToBtn();
@@ -129,7 +127,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
             int ranNum = random.nextInt(BTNNUM);
             if (num[ranNum] == false) {
                 btnList.get(i).setTextColor(colorList.get(ranNum).getColorId());
-                btnList.get(i).setBackgroundColor(colorList.get(ranNum).getColorId());
                 if (colorList.get(ranNum).canBeBlackBg()) {
                     btnList.get(i).setBackgroundColor(getResources().getColor(R.color.colorBlack));
                 } else {
@@ -143,6 +140,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private int getRandomNum() {
-        return random.nextInt(quizList.getQuestionLength()-1);
+        return random.nextInt(colorList.size());
     }
 }
