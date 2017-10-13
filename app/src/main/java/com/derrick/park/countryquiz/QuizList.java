@@ -18,7 +18,8 @@ public class QuizList {
         return quizList;
     }
 
-    public int getQuestionNum(){
+    public int getQuestionLength(){
         return quizList.length;
     }
+
 }

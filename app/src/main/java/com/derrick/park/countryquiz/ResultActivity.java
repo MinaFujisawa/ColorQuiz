@@ -21,8 +21,8 @@ public class ResultActivity extends AppCompatActivity {
         int score = getIntent().getIntExtra("score", 0);
         mScoreTextView.setText(String.valueOf(score));
 
-        mQuestionNumTextView = (TextView) findViewById(R.id.questionNum);
-        mQuestionNumTextView.setText(String.valueOf(quizList.getQuestionNum()));
+//        mQuestionNumTextView = (TextView) findViewById(R.id.questionNum);
+//        mQuestionNumTextView.setText(String.valueOf(quizList.getQuestionNum()));
 
         mRetryBtn = (Button) findViewById(R.id.btn_retry);
         mRetryBtn.setOnClickListener(new View.OnClickListener() {

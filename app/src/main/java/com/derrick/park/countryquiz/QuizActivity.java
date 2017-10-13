@@ -18,12 +18,12 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     private QuizList quizList = new QuizList();
     final int BTNNUM = 4;
     private ArrayList<Button> btnList = new ArrayList<>();
-    private List<Colors> colorList = new ArrayList<>();
-    private TextView mQustionColor;
-    private TextView mCountDownText;
-    private TextView mIndexText;
+    private List<Color> colorList = new ArrayList<>();
+    private TextView mQustionColorTextView;
+    private TextView mCountDownTextView;
     private int quizIndex = 0;
     private int mScore;
+    private String answerColor;
     int QIndex;
 
     @Override
@@ -32,9 +32,9 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         String buttonText = b.getText().toString();
         check(buttonText);
 
-        setquiz();
+                setQuiz();
         setAnswerBtn(QIndex);
-        countIndex();
+        quizIndex++;
     }
 
     @Override
@@ -47,23 +47,18 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         btnList.add((Button) findViewById(R.id.btn3));
         btnList.add((Button) findViewById(R.id.btn4));
 
-        colorList.add(new Colors(getResources().getColor(R.color.colorRed), true));
-        colorList.add(new Colors(getResources().getColor(R.color.colorBlack), true));
-        colorList.add(new Colors(getResources().getColor(R.color.colorYellow), false));
-        colorList.add(new Colors(getResources().getColor(R.color.colorBlue), true));
-        colorList.add(new Colors(getResources().getColor(R.color.colorGreen), false));
-        colorList.add(new Colors(getResources().getColor(R.color.colorPink), false));
-
-        //Show Index number
-        mIndexText = (TextView) findViewById(R.id.index);
-        mIndexText.setText(String.valueOf(quizIndex));
+        colorList.add(new Color(getResources().getColor(R.color.colorRed), getString(R.string.c_red), true));
+        colorList.add(new Color(getResources().getColor(R.color.colorBlack), getString(R.string.c_black), false));
+        colorList.add(new Color(getResources().getColor(R.color.colorBlue), getString(R.string.c_blue), false));
+        colorList.add(new Color(getResources().getColor(R.color.colorGreen), getString(R.string.c_green), true));
+        colorList.add(new Color(getResources().getColor(R.color.colorPink), getString(R.string.c_pink), true));
 
         //CountDownTimer
-        mCountDownText = (TextView) findViewById(R.id.countDown);
+        mCountDownTextView = (TextView) findViewById(R.id.countDown);
         new CountDownTimer(31000, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                mCountDownText.setText(String.valueOf(millisUntilFinished / 1000));
+                mCountDownTextView.setText(String.valueOf(millisUntilFinished / 1000));
             }
 
             public void onFinish() {
@@ -76,8 +71,8 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
 
         //first quiz
-        mQustionColor = (TextView) findViewById(R.id.quiz_color);
-        setquiz();
+        mQustionColorTextView = (TextView) findViewById(R.id.quiz_color);
+        setQuiz();
         setAnswerBtn(QIndex);
 
         // add click listeners for all buttons
@@ -89,35 +84,39 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void check(String userAnswer) {
-        if ((mQustionColor.getText().toString()).equals(userAnswer)) {
-            Toast.makeText(QuizActivity.this, R.string.correct_toast, Toast.LENGTH_SHORT).show();
+        if (answerColor.equals(userAnswer)) {
+            Toast.makeText(QuizActivity.this, R.string.correct, Toast.LENGTH_SHORT).show();
             mScore++;
         } else {
-            Toast.makeText(QuizActivity.this, R.string.incorrect_toast, Toast.LENGTH_SHORT).show();
+            Toast.makeText(QuizActivity.this, R.string.incorrect, Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void setquiz() {
-        QIndex = randomNum();
-        mQustionColor.setText(quizList.getQuizList()[QIndex].getQuiz());
-        mQustionColor.setTextColor(colorList.get(randomNum()).getColorName());
+    private void setQuiz() {
+        QIndex = getRandomNum();
+        //set text
+        mQustionColorTextView.setText(quizList.getQuizList()[QIndex].getColorNameStringId());
+        //set text color
+        Color color = colorList.get(getRandomNum());
+        answerColor = color.getColorName();
+        mQustionColorTextView.setTextColor(color.getColorId());
     }
 
     private void setAnswerBtn(int currentQIndex) {
-        boolean num[] = new boolean[quizList.getQuestionNum()];
+        boolean num[] = new boolean[quizList.getQuestionLength()];
 
         // set other option btns
         int i = 0;
         while (i < BTNNUM) {
-            int p = random.nextInt(quizList.getQuestionNum());
-            if (num[p] == false && p != currentQIndex) {
-                btnList.get(i).setText(quizList.getQuizList()[p].getQuiz());
-                num[p] = true;
+            int randomNum = getRandomNum();
+            if (num[randomNum] == false && randomNum != currentQIndex) {
+                btnList.get(i).setText(quizList.getQuizList()[randomNum].getColorNameStringId());
+                num[randomNum] = true;
                 i++;
             }
         }
         // set collect answer btn
-        btnList.get(random.nextInt(BTNNUM)).setText(mQustionColor.getText().toString());
+        btnList.get(random.nextInt(BTNNUM)).setText(answerColor);
 
         setColorToBtn();
     }
@@ -127,26 +126,23 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         boolean num[] = new boolean[BTNNUM];
         int i = 0;
         while (i < BTNNUM) {
-            int p = random.nextInt(BTNNUM);
-            if (num[p] == false) {
-                btnList.get(i).setBackgroundColor(colorList.get(p).getColorName());
-                if (colorList.get(p).isDeepColor()) {
-                    btnList.get(i).setTextColor(getResources().getColor(R.color.colorWhite));
+            int ranNum = random.nextInt(BTNNUM);
+            if (num[ranNum] == false) {
+                btnList.get(i).setTextColor(colorList.get(ranNum).getColorId());
+                btnList.get(i).setBackgroundColor(colorList.get(ranNum).getColorId());
+                if (colorList.get(ranNum).canBeBlackBg()) {
+                    btnList.get(i).setBackgroundColor(getResources().getColor(R.color.colorBlack));
                 } else {
-                    btnList.get(i).setTextColor(getResources().getColor(R.color.colorBlack));
+                    btnList.get(i).setBackgroundColor(getResources().getColor(R.color.colorWhite));
                 }
-                num[p] = true;
+
+                num[ranNum] = true;
                 i++;
             }
         }
     }
 
-    private void countIndex() {
-        quizIndex++;
-        mIndexText.setText(String.valueOf(quizIndex));
-    }
-
-    private int randomNum() {
-        return random.nextInt(quizList.getQuestionNum());
+    private int getRandomNum() {
+        return random.nextInt(quizList.getQuestionLength()-1);
     }
 }

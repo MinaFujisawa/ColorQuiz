@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Color Quiz</string>
+    <string name="app_name">Stroop Test</string>
     <string name="start">START!</string>
     <string name="result">Your Score</string>
     <string name="c_red">Red</string>
@@ -8,8 +8,8 @@
     <string name="c_green">Green</string>
     <string name="c_black">Black</string>
     <string name="c_pink">Pink</string>
-    <string name="correct_toast">Correct!</string>
-    <string name="incorrect_toast">Incorrect!</string>
+    <string name="correct">Correct!</string>
+    <string name="incorrect">Incorrect!</string>
     <string name="result_heading">Your score</string>
     <string name="restart">RETRY!</string>
 
