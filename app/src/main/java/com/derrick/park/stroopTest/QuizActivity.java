@@ -1,4 +1,4 @@
-package com.derrick.park.countryquiz;
+package com.derrick.park.stroopTest;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,16 +22,15 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mCountDownTextView;
     private int mScore;
     private String answerColor;
-    int QIndex;
 
     @Override
-    public void onClick(View v)     {
+    public void onClick(View v) {
         Button b = (Button) v;
         String buttonText = b.getText().toString();
         check(buttonText);
 
         setQuiz();
-        setAnswerBtn(QIndex);
+        setAnswerBtn();
     }
 
     @Override
@@ -70,7 +69,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         //first quiz
         mQuestionColorTextView = (TextView) findViewById(R.id.quiz_color);
         setQuiz();
-        setAnswerBtn(QIndex);
+        setAnswerBtn();
 
         // add click listeners for all buttons
         for (int i = 0; i < BTNNUM; i++) {
@@ -90,30 +89,30 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setQuiz() {
-        QIndex = getRandomNum();
+        int randNum = getRandomNum();
         //set text
-        mQuestionColorTextView.setText(colorList.get(QIndex).getColorName());
+        mQuestionColorTextView.setText(colorList.get(randNum).getColorName());
         //set text color
         Color color = colorList.get(getRandomNum());
         answerColor = color.getColorName();
         mQuestionColorTextView.setTextColor(color.getColorId());
     }
 
-    private void setAnswerBtn(int currentQIndex) {
-        boolean num[] = new boolean[colorList.size()];
+    private void setAnswerBtn() {
+        boolean colorIndices[] = new boolean[colorList.size()];
 
         // set other option btns
         int i = 0;
         while (i < BTNNUM) {
             int randomNum = getRandomNum();
-            if (num[randomNum] == false && randomNum != currentQIndex) {
-                btnList.get(i).setText(colorList.get(QIndex).getColorName());
-                num[randomNum] = true;
+            if (colorIndices[randomNum] == false && !colorList.get(randomNum).getColorName().equals(answerColor)) {
+                btnList.get(i).setText(colorList.get(randomNum).getColorName());
+                colorIndices[randomNum] = true;
                 i++;
             }
         }
+
         // set collect answer btn
-        // TODO:被り防止？
         btnList.get(random.nextInt(BTNNUM)).setText(answerColor);
 
         setColorToBtn();

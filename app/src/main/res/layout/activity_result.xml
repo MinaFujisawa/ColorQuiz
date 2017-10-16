@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.derrick.park.countryquiz.ResultActivity">
+    tools:context="com.derrick.park.stroopTest.ResultActivity">
 
     <TextView
         android:layout_width="wrap_content"

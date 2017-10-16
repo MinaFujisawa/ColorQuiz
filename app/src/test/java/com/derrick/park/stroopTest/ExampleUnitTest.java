@@ -1,4 +1,4 @@
-package com.derrick.park.countryquiz;
+package com.derrick.park.stroopTest;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.derrick.park.countryquiz;
+package com.derrick.park.stroopTest;
 
 /**
  * Created by MinaFujisawa on 2017/05/21.
