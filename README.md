@@ -1,6 +1,6 @@
 # Stroop_Test
 
-The game will display one of four words: blue, black, yellow, green and red.
+The game will display one of five words: blue, black, yellow, green and red.
 
 A random word will appear on screen, one after another, each appearing in a random color (which may not match the color denoted by the word).
 
